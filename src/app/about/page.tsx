@@ -1,253 +1,157 @@
-import { Metadata } from "next";
-import Link from "next/link";
-import { SITE_URL, SOCIAL_LINKS } from "@/lib/constants";
-import { personSchema, breadcrumbSchema } from "@/lib/schema";
-import ScrollReveal from "@/components/ScrollReveal";
+import { Metadata } from 'next';
+import Link from 'next/link';
+import PersonSchema from '@/components/PersonSchema';
+import PageHero from '@/components/PageHero';
+import ScrollReveal from '@/components/ScrollReveal';
+import GoldBanner from '@/components/GoldBanner';
+import Marquee from '@/components/Marquee';
+import { HighlightLight, HighlightGold } from '@/components/HighlightText';
+
+const BASE = 'https://tamerlanmusayev.com';
 
 export const metadata: Metadata = {
-  title: "About Tamerlan Musayev — Entrepreneur & Founder of PeptideLeads",
+  title: 'About Tamerlan Musayev | Founder & Builder',
   description:
-    "Learn about Tamerlan Musayev — an 18-year-old entrepreneur from Houston, TX. From Web3 and NFTs to founding PeptideLeads, a patient generation agency for peptide therapy clinics.",
+    'The personal story of Tamerlan Musayev — Azerbaijani-American entrepreneur from Houston, TX. From Web3 to founding PeptideLeads, a patient generation agency.',
   openGraph: {
-    title: "About Tamerlan Musayev — Entrepreneur & Founder of PeptideLeads",
+    title: 'About Tamerlan Musayev | Founder & Builder',
     description:
-      "Learn about Tamerlan Musayev — an 18-year-old entrepreneur from Houston, TX who built PeptideLeads from scratch.",
-    url: `${SITE_URL}/about`,
+      'The personal story of Tamerlan Musayev — Azerbaijani-American entrepreneur building PeptideLeads from Houston, TX.',
+    url: `${BASE}/about`,
+    type: 'profile',
   },
   twitter: {
-    card: "summary_large_image",
-    title: "About Tamerlan Musayev — Entrepreneur & Founder of PeptideLeads",
+    card: 'summary_large_image',
+    title: 'About Tamerlan Musayev | Founder & Builder',
     description:
-      "Learn about Tamerlan Musayev — 18-year-old entrepreneur from Houston, TX.",
+      'The personal story of Tamerlan Musayev — Azerbaijani-American entrepreneur from Houston, TX.',
   },
-  alternates: { canonical: `${SITE_URL}/about` },
+  alternates: { canonical: `${BASE}/about` },
 };
 
 export default function AboutPage() {
-  const person = personSchema();
-  const breadcrumbs = breadcrumbSchema([
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-  ]);
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(person) }}
+      <PersonSchema pagePath="/about" />
+
+      <PageHero
+        bgText="ABOUT"
+        label="About Me"
+        title="The story *behind* the work"
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
-      />
 
-      {/* Hero */}
+      <Marquee />
+
+      {/* Background */}
       <section className="section-padding">
-        <div className="container-wide">
-          <ScrollReveal>
-            <p className="text-gold-600 font-medium text-sm uppercase tracking-[0.2em] mb-4">
-              About
+        <ScrollReveal>
+          <div className="s-label">Background</div>
+          <h2 className="s-head">
+            Where I <em>come from</em>
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal>
+          <div style={{ maxWidth: 680 }}>
+            <p style={{ fontSize: '1.05rem', color: 'var(--dim)', lineHeight: 1.85, marginBottom: 24 }}>
+              I was born in Azerbaijan and moved to the US when I was around four. I grew up in Katy, Texas — a suburb
+              outside Houston. My family is <HighlightLight>Azerbaijani and Russian</HighlightLight>, and I grew up
+              speaking both English and Russian at home. That dual-culture upbringing shaped a lot of how I think —
+              practical, resourceful, and always looking at problems from more than one angle.
             </p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-navy-900 leading-tight mb-8">
-              About Tamerlan Musayev
-            </h1>
+            <p style={{ fontSize: '1.05rem', color: 'var(--dim)', lineHeight: 1.85 }}>
+              Houston has been home for most of my life. It is where I went to school, where I started my first
+              projects, and where I still operate today. Everything I have built started from here.
+            </p>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* Journey */}
+      <section className="section-padding section-dark">
+        <ScrollReveal>
+          <div className="s-label">Journey</div>
+          <h2 className="s-head">
+            How I <em>got here</em>
+          </h2>
+        </ScrollReveal>
+        <div style={{ maxWidth: 680 }}>
+          <ScrollReveal>
+            <p style={{ fontSize: '1.05rem', color: '#8a8580', lineHeight: 1.85, marginBottom: 24 }}>
+              My first real exposure to business was during the Web3 and NFT era. I got in early, built an
+              8,000-person following, managed communities, ran collaboration campaigns between projects, and served as
+              an admin for alpha groups like Alpha Omega. I traded collections like Invisible Friends and generated
+              six figures in revenue. It taught me how to sell, how to read markets, and how to move fast.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal>
+            <p style={{ fontSize: '1.05rem', color: '#8a8580', lineHeight: 1.85, marginBottom: 24 }}>
+              When the hype cycle cooled off, I wanted something with real staying power. I transitioned into B2B lead
+              generation — cold email systems, data scraping, deliverability optimization, outbound automation. I
+              trained under an agency founder who had been doing this for years, and I absorbed everything I could
+              about building infrastructure that generates pipeline at scale.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal>
+            <p style={{ fontSize: '1.05rem', color: '#8a8580', lineHeight: 1.85 }}>
+              That foundation led me to start <HighlightGold>PeptideLeads</HighlightGold> — a patient generation
+              agency for peptide therapy clinics. I saw an entire industry with terrible marketing and no one
+              building a real solution. So I built one.
+            </p>
           </ScrollReveal>
         </div>
       </section>
 
-      {/* Bio + Photo */}
-      <section className="px-6 md:px-12 lg:px-24 pb-20">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 items-start">
-            {/* Photo placeholder */}
-            <ScrollReveal className="lg:col-span-2">
-              <div className="aspect-[3/4] bg-gradient-to-br from-navy-100 to-navy-50 rounded-2xl flex items-center justify-center border border-navy-100/50">
-                <div className="text-center">
-                  <div className="w-20 h-20 rounded-full bg-navy-200/50 mx-auto mb-4 flex items-center justify-center">
-                    <span className="font-serif text-2xl text-navy-400">TM</span>
-                  </div>
-                  <p className="text-navy-400 text-sm font-medium">Photo Coming Soon</p>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* Bio */}
-            <ScrollReveal delay={200} className="lg:col-span-3">
-              <div className="space-y-6 text-lg text-navy-700 leading-relaxed">
-                <p>
-                  Tamerlan Musayev — most people call him Tamer — is an 18-year-old
-                  entrepreneur based in Houston, Texas. He is the founder of{" "}
-                  <a
-                    href="https://peptideleads.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-navy-900 font-medium link-underline"
-                  >
-                    PeptideLeads
-                  </a>
-                  , a patient generation agency built exclusively for peptide therapy clinics.
-                </p>
-                <p>
-                  Born in Kazakhstan and raised in Katy, Texas, Tamerlan Musayev got into the world of
-                  entrepreneurship early. At 13, he discovered Web3 and NFTs during
-                  the 2021 boom. While most kids his age were focused on school and
-                  video games, Tamer was learning about blockchain technology,
-                  building an online following of over 8,000 people, and trading
-                  NFTs — including the Invisible Friends collection. He served as
-                  an admin in the Alpha Omega community and generated six figures
-                  in revenue before he turned 18.
-                </p>
-                <p>
-                  But Tamerlan Musayev didn&apos;t want to ride hype cycles forever. In 2024,
-                  he started looking for an industry where he could build something
-                  sustainable — a real business that solved a real problem. That
-                  search led him to peptide therapy, a rapidly growing segment of
-                  healthcare where clinics were desperately underserved by
-                  marketing agencies.
-                </p>
-                <p>
-                  He founded PeptideLeads with a clear thesis: peptide therapy
-                  clinics shouldn&apos;t have to pay massive retainers to agencies
-                  that don&apos;t understand their industry. Instead, PeptideLeads
-                  generates exclusive patient leads at a flat rate of $50 per lead,
-                  covers all ad spend, and locks in exclusive zip code territories
-                  so clinics never compete with each other. The company has built
-                  over 8,000 programmatic SEO pages and maintains a proprietary
-                  database of every peptide clinic in the United States.
-                </p>
-                <p>
-                  Beyond business, Tamerlan Musayev is deeply interested in
-                  spirituality and philosophy — particularly Kabbalah. He believes
-                  that personal growth and business growth go hand in hand. He&apos;s
-                  also passionate about fitness, biohacking, and the science behind
-                  peptide therapy itself.
-                </p>
-                <p>
-                  Tamerlan Musayev&apos;s philosophy is simple: learn by doing, don&apos;t
-                  chase hype, and build things that matter. He believes the best
-                  time to take risks is when you&apos;re young, and that hard work
-                  compounds in ways most people can&apos;t see until years later.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-4 mt-10">
-                <Link href="/peptideleads" className="btn-primary">
-                  See What I&apos;m Building
-                </Link>
-                <Link href="/experience" className="btn-secondary">
-                  View My Experience
-                </Link>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Values */}
-      <section className="section-padding bg-white">
-        <div className="container-wide">
-          <ScrollReveal>
-            <p className="text-gold-600 font-medium text-sm uppercase tracking-[0.2em] mb-4">
-              What I Believe
-            </p>
-            <h2 className="text-4xl md:text-5xl font-serif text-navy-900 mb-12">
-              Values &amp; Philosophy
-            </h2>
-          </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                title: "Learn By Doing",
-                desc: "Tamerlan Musayev has never waited for permission to start something. The best education comes from building, failing, and iterating — not from textbooks.",
-              },
-              {
-                title: "Build Real Businesses",
-                desc: "Hype fades. Real value endures. That's why Tamerlan Musayev transitioned from Web3 to building PeptideLeads — a company that solves a genuine market need.",
-              },
-              {
-                title: "Stay Grounded",
-                desc: "Spirituality, philosophy, and self-awareness keep the ego in check. Business is a vehicle for growth — personal and financial.",
-              },
-              {
-                title: "Take Risks Young",
-                desc: "At 18, the downside is minimal and the upside is unlimited. Tamerlan Musayev believes every young person should be building something — even if it fails.",
-              },
-            ].map((value, i) => (
-              <ScrollReveal key={value.title} delay={i * 100}>
-                <div className="card h-full">
-                  <h3 className="text-xl font-serif text-navy-900 mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-navy-600 leading-relaxed">{value.desc}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Interests */}
+      {/* What drives me */}
       <section className="section-padding">
-        <div className="container-wide">
+        <ScrollReveal>
+          <div className="s-label">What Drives Me</div>
+          <h2 className="s-head">
+            Systems over <em>shortcuts</em>
+          </h2>
+        </ScrollReveal>
+        <div style={{ maxWidth: 680 }}>
           <ScrollReveal>
-            <p className="text-gold-600 font-medium text-sm uppercase tracking-[0.2em] mb-4">
-              Beyond Business
+            <p style={{ fontSize: '1.05rem', color: 'var(--dim)', lineHeight: 1.85, marginBottom: 24 }}>
+              I care about building things that work without me babysitting them. Cold email infrastructure that sends
+              thousands of emails a day without deliverability issues. SEO systems that compound traffic month over
+              month. CRM automations that route leads to clinics in real time. That is the kind of work I find
+              satisfying — the part most people skip because it is not flashy.
             </p>
-            <h2 className="text-4xl md:text-5xl font-serif text-navy-900 mb-8">
-              Interests
-            </h2>
           </ScrollReveal>
-          <ScrollReveal delay={100}>
-            <div className="flex flex-wrap gap-4">
-              {[
-                "Business & Entrepreneurship",
-                "Spirituality & Kabbalah",
-                "Peptides & Biohacking",
-                "Fitness & Health",
-                "Digital Marketing",
-                "Sales & Persuasion",
-                "Philosophy",
-                "Technology",
-              ].map((interest) => (
-                <span
-                  key={interest}
-                  className="px-6 py-3 bg-white rounded-full border border-navy-100/50 text-navy-700 font-medium text-sm"
-                >
-                  {interest}
-                </span>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="section-padding bg-white">
-        <div className="container-narrow text-center">
           <ScrollReveal>
-            <h2 className="text-4xl md:text-5xl font-serif text-navy-900 mb-6">
-              Want to Connect?
-            </h2>
-            <p className="text-xl text-navy-600 mb-10">
-              Tamerlan Musayev is always open to meeting new people, exploring
-              opportunities, and having real conversations.
+            <p style={{ fontSize: '1.05rem', color: 'var(--dim)', lineHeight: 1.85, marginBottom: 24 }}>
+              With <HighlightLight>PeptideLeads</HighlightLight>, I cover all the ad spend and infrastructure costs
+              myself. Clinics only pay per qualified patient. That model forces me to be good at what I do — if my
+              systems do not perform, I lose money. I like that alignment.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/contact" className="btn-primary">
+          </ScrollReveal>
+          <ScrollReveal>
+            <p style={{ fontSize: '1.05rem', color: 'var(--dim)', lineHeight: 1.85, marginBottom: 40 }}>
+              If you want to see what that looks like in practice, check out the{' '}
+              <Link href="/work/peptideleads" style={{ color: 'var(--gold)', textDecoration: 'underline' }}>
+                PeptideLeads deep dive
+              </Link>
+              . Or read some of my thinking on the{' '}
+              <Link href="/blog" style={{ color: 'var(--gold)', textDecoration: 'underline' }}>
+                blog
+              </Link>
+              .
+            </p>
+          </ScrollReveal>
+          <ScrollReveal>
+            <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+              <Link href="/work" className="hero-cta">
+                <span>See My Work</span>
+              </Link>
+              <Link href="/contact" className="hero-cta-outline">
                 Get In Touch
               </Link>
-              <a
-                href={SOCIAL_LINKS.calendly}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-secondary"
-              >
-                Book a Call
-              </a>
             </div>
           </ScrollReveal>
         </div>
       </section>
+
+      <GoldBanner />
     </>
   );
 }

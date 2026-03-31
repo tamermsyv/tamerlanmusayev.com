@@ -1,103 +1,138 @@
-import { Metadata } from "next";
-import Link from "next/link";
-import { SITE_URL } from "@/lib/constants";
-import { breadcrumbSchema } from "@/lib/schema";
-import { blogPosts } from "@/lib/blog-data";
-import ScrollReveal from "@/components/ScrollReveal";
+'use client';
 
-export const metadata: Metadata = {
-  title: "Blog — Tamerlan Musayev",
-  description:
-    "Read articles by Tamerlan Musayev on entrepreneurship, cold email outreach, peptide therapy marketing, Web3, and building a business at 18.",
-  openGraph: {
-    title: "Blog — Tamerlan Musayev",
-    description:
-      "Articles by Tamerlan Musayev on entrepreneurship, healthcare marketing, and building businesses.",
-    url: `${SITE_URL}/blog`,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Blog — Tamerlan Musayev",
-    description:
-      "Articles by Tamerlan Musayev on entrepreneurship and healthcare marketing.",
-  },
-  alternates: { canonical: `${SITE_URL}/blog` },
-};
+import { useState } from 'react';
+import Link from 'next/link';
+import PersonSchema from '@/components/PersonSchema';
+import PageHero from '@/components/PageHero';
+import ScrollReveal from '@/components/ScrollReveal';
+import GoldBanner from '@/components/GoldBanner';
+import { blogPosts } from '@/lib/blog-data';
+
+const CATEGORIES = [
+  'All',
+  'Peptide Marketing',
+  'Cold Email',
+  'SEO',
+  'Entrepreneurship',
+  'Personal',
+  'Comparisons',
+];
+
 
 export default function BlogPage() {
-  const breadcrumbs = breadcrumbSchema([
-    { name: "Home", href: "/" },
-    { name: "Blog", href: "/blog" },
-  ]);
+  const [active, setActive] = useState('All');
+
+  const filtered =
+    active === 'All'
+      ? blogPosts
+      : blogPosts.filter((post) => post.category === active);
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      <PersonSchema pagePath="/blog" />
+
+      <PageHero
+        bgText="BLOG"
+        label="Blog"
+        title="Thoughts & *insights*"
       />
 
-      <section className="section-padding">
-        <div className="container-wide">
-          <ScrollReveal>
-            <p className="text-gold-600 font-medium text-sm uppercase tracking-[0.2em] mb-4">
-              Blog
-            </p>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-navy-900 leading-tight mb-8">
-              Thoughts by Tamerlan Musayev
-            </h1>
-            <p className="text-xl text-navy-600 max-w-3xl leading-relaxed">
-              Writing about entrepreneurship, healthcare marketing, cold email,
-              and what it&apos;s really like building a business at 18.
-            </p>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      <section className="px-6 md:px-12 lg:px-24 pb-20 md:pb-28">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {blogPosts.map((post, i) => (
-              <ScrollReveal key={post.slug} delay={i * 100}>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="card block h-full group"
-                >
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs font-medium uppercase tracking-wider text-gold-600 bg-gold-50 px-3 py-1 rounded-full"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <h2 className="text-2xl font-serif text-navy-900 mb-3 group-hover:text-navy-700 transition-colors">
-                    {post.title}
-                  </h2>
-                  <p className="text-navy-600 leading-relaxed mb-4">
-                    {post.description}
-                  </p>
-                  <div className="flex items-center gap-3 text-sm text-navy-400">
-                    <span>Tamerlan Musayev</span>
-                    <span className="w-1 h-1 rounded-full bg-navy-300" />
-                    <time dateTime={post.date}>
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        month: "long",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </time>
-                    <span className="w-1 h-1 rounded-full bg-navy-300" />
-                    <span>{post.readTime}</span>
-                  </div>
-                </Link>
-              </ScrollReveal>
+      {/* Category Filters */}
+      <section className="section-padding" style={{ paddingBottom: 0 }}>
+        <ScrollReveal>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 12,
+              marginBottom: 56,
+            }}
+          >
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                style={{
+                  fontFamily: 'var(--mono)',
+                  fontSize: '0.65rem',
+                  letterSpacing: '0.2em',
+                  textTransform: 'uppercase',
+                  padding: '10px 24px',
+                  border: '1px solid',
+                  borderColor: active === cat ? 'var(--gold)' : 'var(--border)',
+                  background: active === cat ? 'var(--gold)' : 'transparent',
+                  color: active === cat ? '#fff' : 'var(--dim)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s',
+                }}
+              >
+                {cat}
+              </button>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
       </section>
+
+      {/* Blog Grid */}
+      <section className="section-padding" style={{ paddingTop: 0 }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+            gap: 24,
+          }}
+        >
+          {filtered.map((post) => (
+            <ScrollReveal key={post.slug}>
+              <Link href={`/blog/${post.slug}`} className="blog-card">
+                <div className="blog-card-cat">{post.category}</div>
+                <div className="blog-card-title">{post.title}</div>
+                <div className="blog-card-excerpt">{post.excerpt || post.description}</div>
+                <div
+                  style={{
+                    marginTop: 16,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 12,
+                    fontFamily: 'var(--mono)',
+                    fontSize: '0.6rem',
+                    letterSpacing: '0.15em',
+                    color: 'var(--muted)',
+                  }}
+                >
+                  <span>Tamerlan Musayev</span>
+                  <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--gold)' }} />
+                  <span>{post.category}</span>
+                </div>
+              </Link>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        {filtered.length === 0 && (
+          <div style={{ textAlign: 'center', padding: '80px 0' }}>
+            <p style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', color: 'var(--muted)' }}>
+              No posts in this category yet.
+            </p>
+          </div>
+        )}
+
+        <ScrollReveal>
+          <div style={{ marginTop: 60, display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+            <Link href="/about" className="hero-cta-outline">
+              About Me
+            </Link>
+            <Link href="/work" className="hero-cta-outline">
+              My Work
+            </Link>
+            <Link href="/contact" className="hero-cta-outline">
+              Contact
+            </Link>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      <GoldBanner />
     </>
   );
 }

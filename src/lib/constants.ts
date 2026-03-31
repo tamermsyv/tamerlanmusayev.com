@@ -1,7 +1,7 @@
 export const SITE_URL = "https://tamerlanmusayev.com";
 export const SITE_NAME = "Tamerlan Musayev";
 export const SITE_DESCRIPTION =
-  "Tamerlan Musayev — 18-year-old entrepreneur, founder of PeptideLeads, and digital marketing expert based in Houston, TX.";
+  "Tamerlan Musayev is an Azerbaijani-American entrepreneur and founder of PeptideLeads, based in Houston, Texas.";
 
 export const SOCIAL_LINKS = {
   peptideleads: "https://peptideleads.com",
